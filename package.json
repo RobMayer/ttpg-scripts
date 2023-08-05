@@ -1,0 +1,29 @@
+{
+  "name": "ttpg-helper",
+  "version": "0.0.1",
+  "description": "",
+  "bin": {
+    "ttpg-helper": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./bin/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.8",
+    "@types/uuid": "^9.0.2",
+    "@types/archiver": "^5.3.2",
+    "@types/cross-spawn": "^6.0.2",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "colorette": "^2.0.20",
+    "cross-spawn": "^7.0.3",
+    "uuid": "^9.0.0",
+    "archiver": "^5.3.1"
+  }
+}
