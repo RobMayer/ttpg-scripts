@@ -1,9 +1,9 @@
 {
-  "name": "ttpg-helper",
+  "name": "ttpg-scripts",
   "version": "0.0.1",
   "description": "",
   "bin": {
-    "ttpg-helper": "./bin/index.js"
+    "ttpg-scripts": "./bin/index.js"
   },
   "scripts": {
     "build": "tsc",
