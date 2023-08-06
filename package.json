@@ -1,6 +1,6 @@
 {
   "name": "ttpg-scripts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "bin": {
     "ttpg-scripts": "./bin/index.js"
@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "UNLICENSE",
   "devDependencies": {
     "@types/node": "^20.4.8",
     "@types/uuid": "^9.0.2",
