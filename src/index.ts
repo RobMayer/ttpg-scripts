@@ -1,21 +1,40 @@
 #!/usr/bin/env node
 
-import chalk  from "colorette";
-import { runSetup } from "./setup";
+import * as chalk from "colorette";
+import { runSetup } from "./commands/setup";
+import { runStatus } from "./commands/status";
+import { runDev } from "./commands/dev";
+import { runClean } from "./commands/clean";
+import { runReset } from "./commands/reset";
+import { Logger } from "./common";
+import { runBuild } from "./commands/build";
+import { runPurge } from "./commands/purge";
 
 const cmd = process.argv[2] ?? "setup";
 
-const runCommand = async () => {
-    switch (cmd) {
-        case "setup": return await runSetup();
-    }
-    throw Error("Unrecognized Command");
-}
+const HANDLERS = {
+    clean: runClean,
+    reset: runReset,
+    dev: runDev,
+    status: runStatus,
+    setup: runSetup,
+    build: runBuild,
+    purge: runPurge,
+} as const;
 
-console.log(chalk.whiteBright("Good Morning, Captain!"));
-runCommand().then(() => {
-    console.log(chalk.greenBright("Good Hunting!"));
-}).catch((e) => {
-    console.error(chalk.redBright("Something went wrong"));
-    console.error(e);
-})
+const runCommand = async () => {
+    if (cmd in HANDLERS) {
+        return await HANDLERS[cmd as keyof typeof HANDLERS]();
+    }
+    throw Error(`Unrecognized Command ${cmd}`);
+};
+
+Logger.welcome();
+runCommand()
+    .then(() => {
+        Logger.complete();
+    })
+    .catch((e) => {
+        Logger.error("Something went wrong");
+        console.error(e);
+    });

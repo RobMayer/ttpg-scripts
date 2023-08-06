@@ -14,6 +14,9 @@ dependencies:
   cross-spawn:
     specifier: ^7.0.3
     version: 7.0.3
+  typescript:
+    specifier: ^5.1.6
+    version: 5.1.6
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
@@ -31,9 +34,6 @@ devDependencies:
   '@types/uuid':
     specifier: ^9.0.2
     version: 9.0.2
-  typescript:
-    specifier: ^5.1.6
-    version: 5.1.6
 
 packages:
 
@@ -372,7 +372,7 @@ packages:
     resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
+    dev: false
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
