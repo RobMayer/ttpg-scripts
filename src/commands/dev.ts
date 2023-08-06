@@ -9,7 +9,14 @@ export const runDev = async () => {
 
     if (!(await pathExists(path.resolve("./dev/", `${config.project.slug}_dev`)))) {
         try {
+            const manifest = {
+                Name: `${config.project.name} (Dev)`,
+                Version: config.project.version,
+                GUID: config.project.guid.dev,
+            };
+
             await fs.mkdir(path.resolve("./dev", `${config.project.slug}_dev`), { recursive: true });
+            await fs.writeFile(path.resolve("./dev/", `${config.project.slug}_dev`, "Manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
         } catch (e) {
             Logger.error("Failed to create dev folder");
             throw e;
