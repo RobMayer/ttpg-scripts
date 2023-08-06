@@ -1,6 +1,6 @@
 {
   "name": "ttpg-scripts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "bin": {
     "ttpg-scripts": "./bin/index.js"

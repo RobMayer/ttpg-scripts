@@ -17,16 +17,11 @@ export const runDev = async () => {
 
             await fs.mkdir(path.resolve("./dev", `${config.project.slug}_dev`), { recursive: true });
             await fs.writeFile(path.resolve("./dev/", `${config.project.slug}_dev`, "Manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
+            await Promise.all(ASSET_DIRS.map((dir) => fs.symlink(path.resolve("assets", dir), path.resolve("dev", `${config.project.slug}_dev`, dir), "junction")));
         } catch (e) {
             Logger.error("Failed to create dev folder");
             throw e;
         }
-    }
-    try {
-        await Promise.all(ASSET_DIRS.map((dir) => fs.symlink(path.resolve("assets", dir), path.resolve("dev", `${config.project.slug}_dev`, dir), "junction")));
-    } catch (e) {
-        Logger.error("Failed to symlink dev folder to ttpg location");
-        throw e;
     }
 
     if (!(await pathExists(path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}_dev`)))) {

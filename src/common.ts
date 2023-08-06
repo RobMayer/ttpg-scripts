@@ -169,7 +169,7 @@ export const guid = () => uuid().replace(/-/g, "").toUpperCase();
 export const spawnBuilder = (target: string) => {
     return new Promise((resolve, reject) => {
         const child = spawn("yarn", ["install", "--modules-folder", target, "--prod"], { stdio: "pipe", cwd: process.cwd() });
-        child.on("close", (code: number) => (code > 0 ? reject(code) : resolve(0)));
+        child.on("close", (code: number) => (code === 0 ? resolve(0) : undefined));
         child.on("error", (e) => reject(e));
     });
 };
@@ -177,7 +177,7 @@ export const spawnBuilder = (target: string) => {
 export const spawnTranspiler = (target: string) => {
     return new Promise((resolve, reject) => {
         const child = spawn("tsc", ["--outDir", target], { stdio: "pipe", env: process.env });
-        child.on("close", (code: number) => (code > 0 ? reject(code) : resolve(0)));
+        child.on("close", (code: number) => (code === 0 ? resolve(0) : undefined));
         child.on("error", (e) => reject(e));
     });
 };
