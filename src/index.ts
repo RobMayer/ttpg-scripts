@@ -9,6 +9,7 @@ import { runReset } from "./commands/reset";
 import { Logger, guid } from "./common";
 import { runBuild } from "./commands/build";
 import { runPurge } from "./commands/purge";
+import path = require("path");
 
 const cmd = process.argv[2] ?? "setup";
 
