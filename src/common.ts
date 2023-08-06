@@ -107,6 +107,10 @@ export const ensureProjectConfig = async () => {
             ).trim();
             const devGuid = inputDevGuid !== "" ? inputDevGuid : suggstedDevGuid;
 
+            const suggestedVersion = JSON.parse(await fs.readFile(path.resolve("./", "package.json"), "utf8"))?.version ?? "0.0.1";
+            const inputVersion = (await input.question(chalk.whiteBright(`Provide a version number [${chalk.white(suggestedVersion)}]: `))).trim();
+            const projectVersion = inputVersion !== "" ? inputVersion : suggestedVersion;
+
             const suggestedTemplate = "typescript";
             const inputTemplate = (await input.question(chalk.whiteBright(`Are you using Typescript or Javascript?: [${chalk.white(suggestedTemplate)}]: `))).trim().toLowerCase();
             const projectTemplate = inputTemplate === "typescript" || inputTemplate === "javascript" ? inputTemplate : suggestedTemplate;
@@ -118,6 +122,7 @@ export const ensureProjectConfig = async () => {
                         name: projectTitle,
                         slug: projectSlug,
                         template: projectTemplate,
+                        version: projectVersion,
                         guid: {
                             dev: devGuid,
                             prd: prdGuid,
