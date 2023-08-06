@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs/promises";
-import { assertSetup, pathExists, Logger, ASSET_DIRS, loadConfig, Config, spawnBuilder, spawnTranspiler } from "../common";
+import { assertSetup, pathExists, Logger, ASSET_DIRS, loadConfig, spawnBuilder, spawnTranspiler } from "../common";
 
 export const runDev = async () => {
     await assertSetup();

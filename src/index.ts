@@ -6,7 +6,7 @@ import { runStatus } from "./commands/status";
 import { runDev } from "./commands/dev";
 import { runClean } from "./commands/clean";
 import { runReset } from "./commands/reset";
-import { Logger } from "./common";
+import { Logger, guid } from "./common";
 import { runBuild } from "./commands/build";
 import { runPurge } from "./commands/purge";
 
@@ -29,12 +29,19 @@ const runCommand = async () => {
     throw Error(`Unrecognized Command ${cmd}`);
 };
 
-Logger.welcome();
-runCommand()
-    .then(() => {
-        Logger.complete();
-    })
-    .catch((e) => {
-        Logger.error("Something went wrong");
-        console.error(e);
-    });
+if (cmd === "guid") {
+    const count = Math.max(1, isNaN(Number(process.argv[3])) ? 1 : Number(process.argv[3]));
+    for (let i = 1; i <= count; i++) {
+        console.log(guid());
+    }
+} else {
+    Logger.welcome();
+    runCommand()
+        .then(() => {
+            Logger.complete();
+        })
+        .catch((e) => {
+            Logger.error("Something went wrong");
+            console.error(e);
+        });
+}

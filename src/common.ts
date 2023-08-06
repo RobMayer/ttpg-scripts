@@ -33,11 +33,15 @@ export type Config = {
     };
 };
 
-const getSuggestedTTPGPath = (): string | null => {
+const getSuggestedTTPGPath = async (): Promise<string | null> => {
     if (process.platform === "darwin") {
-        return path.resolve(process.env.HOME + "/Library/Application Support/Epic/TabletopPlayground/Package");
+        if (await pathExists(process.env.HOME + "/Library/Application Support/Epic/TabletopPlayground/Package")) {
+            return path.resolve(process.env.HOME + "/Library/Application Support/Epic/TabletopPlayground/Package");
+        }
     } else if (process.platform === "win32") {
-        return path.resolve("C:\\Program Files (x86)\\Steam\\steamapps\\common\\TabletopPlayground\\TabletopPlayground\\PersistentDownloadDir");
+        if (await pathExists("C:\\Program Files (x86)\\Steam\\steamapps\\common\\TabletopPlayground\\TabletopPlayground\\PersistentDownloadDir")) {
+            return path.resolve("C:\\Program Files (x86)\\Steam\\steamapps\\common\\TabletopPlayground\\TabletopPlayground\\PersistentDownloadDir");
+        }
     }
     return null;
 };
@@ -48,7 +52,7 @@ export const ensureLocalConfig = async () => {
             input: process.stdin,
             output: process.stdout,
         });
-        const suggestedTTPGPath = getSuggestedTTPGPath();
+        const suggestedTTPGPath = await getSuggestedTTPGPath();
         const input_ttpg_path = (await input.question(chalk.whiteBright(`What is your TTPG path ${suggestedTTPGPath ? `[${chalk.white(suggestedTTPGPath)}]: ` : ": "}`))).trim();
         const ttpg_path = input_ttpg_path !== "" ? input_ttpg_path : suggestedTTPGPath;
         if (ttpg_path) {
