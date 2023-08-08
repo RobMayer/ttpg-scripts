@@ -32,7 +32,7 @@ export const runBuild = async () => {
             Logger.error("Could not create build directory");
             throw e;
         }
-        if (config.project.template === "typescript") {
+        if (config.project.transpile || config.project.template === "typescript") {
             Logger.notice("Transpiling typescript");
             try {
                 await spawnTranspiler(`./build/`);

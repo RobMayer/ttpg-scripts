@@ -33,7 +33,7 @@ export const runDev = async () => {
             throw e;
         }
     }
-    if (config.project.template === "typescript") {
+    if (config.project.transpile || config.project.template === "typescript") {
         Logger.notice("Transpiling typescript");
         try {
             await spawnTranspiler(`./dev/${config.project.slug}_dev/Scripts/`);

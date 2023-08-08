@@ -22,7 +22,8 @@ export type Config = {
         name: string;
         slug: string;
         version: string;
-        template: "javascript" | "typescript";
+        transpile: boolean;
+        template?: "javascript" | "typescript";
         guid: {
             dev: string;
             prd: string;
@@ -148,9 +149,19 @@ export const assertSetup = async (): Promise<void> => {
 };
 
 export const loadConfig = async (): Promise<Config> => {
+    const local: Config["local"] = JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.local.json"), "utf8"));
+    let project: Config["project"] = JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.project.json"), "utf8"));
+
+    if (project.template && !("transpiler" in project)) {
+        project.transpile = project.template === "typescript";
+        const { template, ...newProject } = project;
+        project = newProject;
+        await fs.writeFile(path.resolve("./ttpgcfg.project.json"), JSON.stringify(project), "utf-8");
+    }
+
     return {
-        local: JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.local.json"), "utf8")),
-        project: JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.project.json"), "utf8")),
+        local,
+        project,
     };
 };
 
