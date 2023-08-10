@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import * as chalk from "colorette";
 import { runSetup } from "./commands/setup";
 import { runStatus } from "./commands/status";
 import { runDev } from "./commands/dev";
@@ -10,6 +9,9 @@ import { Logger, guid } from "./common";
 import { runBuild } from "./commands/build";
 import { runPurge } from "./commands/purge";
 import path = require("path");
+import { runLibpack } from "./commands/libpack";
+import { runHelp } from "./help";
+import { runWatch } from "./commands/watch";
 
 const cmd = process.argv[2] ?? "setup";
 
@@ -21,6 +23,9 @@ const HANDLERS = {
     setup: runSetup,
     build: runBuild,
     purge: runPurge,
+    libpack: runLibpack,
+    help: runHelp,
+    watch: runWatch,
 } as const;
 
 const runCommand = async () => {

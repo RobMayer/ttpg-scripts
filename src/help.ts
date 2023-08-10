@@ -1,0 +1,31 @@
+import { Logger } from "./common";
+
+export const runHelp = () => {
+    Logger.log("");
+    Logger.notice("setup");
+    Logger.log("run this to make sure all your configurations and asset folders are in place.");
+    Logger.log("");
+    Logger.notice("dev");
+    Logger.log("run this command to place a development version of your package into ttpg.");
+    Logger.log("");
+    Logger.notice("watch");
+    Logger.log("spawns a watcher that will copy any file you change (and save) in your src folder into your dev folder, meaning changes will live update into your develeopement build within ttpg");
+    Logger.log("");
+    Logger.notice("reset");
+    Logger.log("run this to clear and reset your local config. If you need to change your ttpg directory, this is how you do it.");
+    Logger.log("");
+    Logger.notice("clean");
+    Logger.log("removes the development version of your package from ttpg - no actual data is lost, it just removes the symlink.");
+    Logger.log("");
+    Logger.notice("build");
+    Logger.log("creates a production version of your package and places it into ttpg, ready for upload to mod.io.");
+    Logger.log("");
+    Logger.notice("purge");
+    Logger.log("removes the production version of your package from ttpg, if it exists.");
+    Logger.log("");
+    Logger.notice("libpack");
+    Logger.log("builds a production version of your package where every script used by a template is completely self-contained and minified.");
+    Logger.log("Use this if you intend to make a package with scripted objects for others to import into their package or table-state.");
+    Logger.warning("libpack will bundle *all* dependencies into every script for portabilities sake. Use with care.");
+    Logger.log("");
+};

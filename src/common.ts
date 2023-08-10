@@ -4,6 +4,7 @@ import * as readline from "readline/promises";
 import * as chalk from "colorette";
 import { v4 as uuid } from "uuid";
 import { spawn } from "cross-spawn";
+import * as chokidar from "chokidar";
 
 export const ASSET_DIRS = ["Fonts", "Models", "Sounds", "States", "Templates", "Textures", "Thumbnails"] as const;
 
@@ -179,7 +180,7 @@ export const guid = () => uuid().replace(/-/g, "").toUpperCase();
 
 export const spawnBuilder = (target: string) => {
     return new Promise((resolve, reject) => {
-        const child = spawn("yarn", ["install", "--modules-folder", target, "--prod"], { stdio: "pipe", cwd: process.cwd() });
+        const child = spawn("yarn", ["install", "--modules-folder", target, "--prod"], { stdio: "inherit", cwd: process.cwd() });
         child.on("close", (code: number) => (code === 0 ? resolve(0) : undefined));
         child.on("error", (e) => reject(e));
     });
@@ -187,8 +188,45 @@ export const spawnBuilder = (target: string) => {
 
 export const spawnTranspiler = (target: string) => {
     return new Promise((resolve, reject) => {
-        const child = spawn("tsc", ["--outDir", target], { stdio: "pipe", env: process.env });
+        const child = spawn("tsc", ["--outDir", target], { stdio: "inherit", env: process.env });
         child.on("close", (code: number) => (code === 0 ? resolve(0) : undefined));
+        child.on("error", (e) => reject(e));
+    });
+};
+
+export const spawnTranspilingWatcher = (source: string, dest: string, transpile: boolean) => {
+    if (transpile) {
+        return new Promise((resolve, reject) => {
+            Logger.success("watching files");
+            const child = spawn("tsc", ["--watch", "--outDir", dest], { stdio: "inherit", env: process.env });
+            child.on("close", (code: number) => (code === 0 ? resolve(0) : undefined));
+            child.on("error", (e) => reject(e));
+        });
+    } else {
+        return new Promise((resolve, reject) => {
+            Logger.success("watching files");
+            const watcher = chokidar.watch("./**", { cwd: "./src", ignored: /(^|[/\\])\../ });
+            const doCopy = (path: string) => {
+                Logger.notice(path);
+                fs.cp(`./src/${path}`, `${dest}/${path}`, { recursive: true }).catch((e) => {
+                    //console.error(e);
+                });
+            };
+
+            watcher.on("add", doCopy);
+            watcher.on("addDir", doCopy);
+            watcher.on("change", doCopy);
+            watcher.on("error", (e) => {
+                reject(e);
+            });
+        });
+    }
+};
+
+export const spawnLibBundler = () => {
+    return new Promise((resolve, reject) => {
+        const child = spawn("rollup", ["-c"], { stdio: "inherit", env: process.env, cwd: process.cwd() });
+        child.on("close", (code: number) => (code === 0 ? resolve(0) : reject(-1)));
         child.on("error", (e) => reject(e));
     });
 };
