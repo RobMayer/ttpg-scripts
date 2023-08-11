@@ -20,7 +20,7 @@ export const runLibpack = async () => {
         }
         Logger.log("copying assets...");
         try {
-            await fs.cp(path.resolve("./assets"), path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`), { recursive: true });
+            await fs.cp(path.resolve("./assets"), path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`), { recursive: true, dereference: true });
         } catch (e) {
             Logger.error("Could not copy assets");
             throw e;
@@ -45,7 +45,7 @@ export const runLibpack = async () => {
         } else {
             Logger.notice("Copying javascript");
             try {
-                await fs.cp("./src", `./build/`, { recursive: true });
+                await fs.cp("./src", `./build/`, { recursive: true, dereference: true });
                 Logger.success("Copy Complete");
             } catch (e) {
                 Logger.error("Could not copy scripts");
@@ -109,7 +109,7 @@ export const runLibpack = async () => {
         }
         Logger.log("copying scripts to production directory");
         try {
-            await fs.cp(path.resolve("./lib"), path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`, "Scripts"), { recursive: true });
+            await fs.cp(path.resolve("./lib"), path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`, "Scripts"), { recursive: true, dereference: true });
             Logger.success("scripts copied to production directory");
         } catch (e) {
             Logger.error("Could not copy lib to production directory");
