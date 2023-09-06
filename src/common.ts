@@ -180,7 +180,7 @@ export const guid = () => uuid().replace(/-/g, "").toUpperCase();
 
 export const spawnBuilder = (target: string) => {
     return new Promise((resolve, reject) => {
-        const child = spawn("yarn", ["install", "--modules-folder", target, "--prod", "--no-optional"], { stdio: "inherit", cwd: process.cwd() });
+        const child = spawn("yarn", ["install", "--modules-folder", target, "--prod", "--ignore-optional"], { stdio: "inherit", cwd: process.cwd() });
         child.on("close", (code: number) => (code === 0 ? resolve(0) : undefined));
         child.on("error", (e) => reject(e));
     });
