@@ -12,6 +12,7 @@ import path = require("path");
 import { runLibpack } from "./commands/libpack";
 import { runHelp } from "./help";
 import { runWatch } from "./commands/watch";
+import { runPostPublish } from "./commands/postpublish";
 
 const cmd = process.argv[2] ?? "setup";
 
@@ -26,6 +27,7 @@ const HANDLERS = {
     libpack: runLibpack,
     help: runHelp,
     watch: runWatch,
+    postpublish: runPostPublish,
 } as const;
 
 const runCommand = async () => {

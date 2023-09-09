@@ -25,7 +25,20 @@ export const runPurge = async () => {
               )
                   .trim()
                   .toLowerCase();
-        input.close();
+
+        const curManifest = JSON.parse(await fs.readFile(path.resolve(prodPath, "Manifest.json"), "utf8"));
+        if ("ModID" in curManifest) {
+            const grabModId = process.argv.includes("-y")
+                ? true
+                : (await input.question("There is a ModID associated with this production package, would you like to save it before purging (y/n")).trim().toLowerCase() === "y";
+            input.close();
+            if (grabModId) {
+                config.project.modId = Number(curManifest.ModID);
+                await fs.writeFile(path.resolve("./ttpgcfg.project.json"), JSON.stringify(config.project), "utf-8");
+            }
+        } else {
+            input.close();
+        }
         if (confirm === "y") {
             Logger.log("removing production build from ttpg");
             try {

@@ -29,6 +29,7 @@ export type Config = {
             dev: string;
             prd: string;
         };
+        modId?: number;
     };
     local: {
         ttpg_path: string;

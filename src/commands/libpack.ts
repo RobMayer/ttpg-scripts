@@ -142,6 +142,7 @@ export const runLibpack = async () => {
             Name: config.project.name,
             Version: config.project.version,
             GUID: config.project.guid.prd,
+            ModID: config.project.modId,
         };
         Logger.log("writing production manifest");
         try {
