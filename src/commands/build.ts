@@ -87,6 +87,16 @@ export const runBuild = async () => {
             Logger.error("Could not write production manifest");
             throw e;
         }
+        Logger.log("Copying Thumbnail");
+        try {
+            if (await pathExists(path.resolve("./Thumbnail.png"))) {
+                await fs.copyFile(path.resolve("./Thumbnail.png"), path.resolve(config.local.ttpg_path, `${config.project.slug}`, "Thumbnail.png"));
+            }
+            Logger.success("thumbnail copied");
+        } catch (e) {
+            Logger.error("Could not copy thumbnail");
+            throw e;
+        }
         Logger.success("Your project is ready to be deployed to mod.io");
     }
 };

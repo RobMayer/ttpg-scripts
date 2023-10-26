@@ -18,6 +18,9 @@ export const runPostPublish = async () => {
         } else {
             Logger.warning("There was no mod Id in the package, have you published it yet?");
         }
+        if (!(await pathExists(path.resolve("./Thumbnail.png"))) && (await pathExists(path.resolve(prodPath, "Thumbnail.png")))) {
+            await fs.copyFile(path.resolve(prodPath, "Thumbnail.png"), path.resolve("./Thumbnail.png"));
+        }
     } else {
         Logger.warning("There is no production build in your ttpg folder - aborting");
     }
