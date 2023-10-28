@@ -22,7 +22,7 @@ export const runDev = async () => {
             Logger.log("Copying Thumbnail");
             try {
                 if (await pathExists(path.resolve("./Thumbnail.png"))) {
-                    await fs.copyFile(path.resolve("./Thumbnail.png"), path.resolve(config.local.ttpg_path, `${config.project.slug}_dev`, "Thumbnail.png"));
+                    await fs.copyFile(path.resolve("./Thumbnail.png"), path.resolve("./dev/", `${config.project.slug}_dev`, "Thumbnail.png"));
                 }
                 Logger.success("thumbnail copied");
             } catch (e) {
