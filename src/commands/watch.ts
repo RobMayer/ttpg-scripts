@@ -18,6 +18,17 @@ export const runWatch = async () => {
             await fs.mkdir(path.resolve("./dev", `${config.project.slug}_dev`), { recursive: true });
             await fs.writeFile(path.resolve("./dev/", `${config.project.slug}_dev`, "Manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
             await Promise.all(ASSET_DIRS.map((dir) => fs.symlink(path.resolve("assets", dir), path.resolve("dev", `${config.project.slug}_dev`, dir), "junction")));
+
+            Logger.log("Copying Thumbnail");
+            try {
+                if (await pathExists(path.resolve("./Thumbnail.png"))) {
+                    await fs.copyFile(path.resolve("./Thumbnail.png"), path.resolve(config.local.ttpg_path, `${config.project.slug}_dev`, "Thumbnail.png"));
+                }
+                Logger.success("thumbnail copied");
+            } catch (e) {
+                Logger.error("Could not copy thumbnail");
+                throw e;
+            }
         } catch (e) {
             Logger.error("Failed to create dev folder");
             throw e;
