@@ -15,6 +15,7 @@
     "devDependencies": {
         "@types/archiver": "^5.3.4",
         "@types/cross-spawn": "^6.0.4",
+        "@types/klaw-sync": "^6.0.5",
         "@types/node": "^20.8.8",
         "@types/uuid": "^9.0.6"
     },
@@ -27,6 +28,7 @@
         "colorette": "^2.0.20",
         "cross-spawn": "^7.0.3",
         "fast-glob": "^3.3.1",
+        "klaw-sync": "^6.0.0",
         "rollup": "^3.29.4",
         "typescript": "^5.2.2",
         "uuid": "^9.0.1"

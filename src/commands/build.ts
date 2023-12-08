@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as fs from "fs/promises";
+import * as klawSync from "klaw-sync";
 import { Logger, assertSetup, loadConfig, pathExists, spawnBuilder, spawnTranspiler } from "../common";
 
 export const runBuild = async () => {
@@ -22,6 +23,26 @@ export const runBuild = async () => {
             await fs.cp(path.resolve("./assets"), path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`), { recursive: true, dereference: true });
         } catch (e) {
             Logger.error("Could not copy assets");
+            throw e;
+        }
+        Logger.log("rewriting assets/States GUIDs...");
+        try {
+            const dstDir = path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`, "States");
+            const jsonFilenames = klawSync(dstDir, {
+                filter: (item) => {
+                    return path.extname(item.path) === ".vts";
+                },
+                nodir: true,
+                traverseAll: true,
+            }).map((item) => item.path);
+            const re = new RegExp(config.project.guid.dev, "g");
+            for (const jsonFilename of jsonFilenames) {
+                let data: string = (await fs.readFile(jsonFilename)).toString();
+                data = data.replace(re, config.project.guid.prd);
+                await fs.writeFile(jsonFilename, data);
+            }
+        } catch (e) {
+            Logger.error("Could not rewrite assets/States GUIDs");
             throw e;
         }
         Logger.log("creating temporary build directory");
