@@ -29,6 +29,9 @@ dependencies:
   fast-glob:
     specifier: ^3.3.1
     version: 3.3.1
+  klaw-sync:
+    specifier: ^6.0.0
+    version: 6.0.0
   rollup:
     specifier: ^3.29.4
     version: 3.29.4
@@ -46,6 +49,9 @@ devDependencies:
   '@types/cross-spawn':
     specifier: ^6.0.4
     version: 6.0.4
+  '@types/klaw-sync':
+    specifier: ^6.0.5
+    version: 6.0.5
   '@types/node':
     specifier: ^20.8.8
     version: 20.8.8
@@ -194,6 +200,12 @@ packages:
   /@types/estree@1.0.3:
     resolution: {integrity: sha512-CS2rOaoQ/eAgAfcTfq6amKG7bsN+EMcgGY4FAFQdvSj2y1ixvOZTUA9mOtCai7E1SYu283XNw7urKK30nP3wkQ==}
     dev: false
+
+  /@types/klaw-sync@6.0.5:
+    resolution: {integrity: sha512-xlavCRyu5ibDjsOc7PSgeUbwOBZdnJsND8gFUVfBilplbBIWhLZVjwtqbZq0327ny3jNt7oviEh5NS9a4LudeQ==}
+    dependencies:
+      '@types/node': 20.8.8
+    dev: true
 
   /@types/node@20.8.8:
     resolution: {integrity: sha512-YRsdVxq6OaLfmR9Hy816IMp33xOBjfyOgUd77ehqg96CFywxAPbDbXvAsuN2KVg2HOT8Eh6uAfU+l4WffwPVrQ==}
@@ -574,6 +586,12 @@ packages:
 
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+    dev: false
+
+  /klaw-sync@6.0.0:
+    resolution: {integrity: sha512-nIeuVSzdCCs6TDPTqI8w1Yre34sSq7AkZ4B3sfOBbI2CgVSB4Du4aLQijFU2+lhAFCwt9+42Hel6lQNIv6AntQ==}
+    dependencies:
+      graceful-fs: 4.2.11
     dev: false
 
   /lazystream@1.0.1:
