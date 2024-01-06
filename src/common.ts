@@ -20,6 +20,7 @@ export const pathExists = async (p: string) => {
 
 export type Config = {
     project: {
+        extends?: string;
         name: string;
         slug: string;
         version: string;
@@ -32,6 +33,7 @@ export type Config = {
         modId?: number;
     };
     local: {
+        extends?: string;
         ttpg_path: string;
     };
 };
@@ -151,9 +153,24 @@ export const assertSetup = async (): Promise<void> => {
 };
 
 export const loadConfig = async (): Promise<Config> => {
-    const local: Config["local"] = JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.local.json"), "utf8"));
+    let local: Config["local"] = JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.local.json"), "utf8"));
     let project: Config["project"] = JSON.parse(await fs.readFile(path.resolve("./ttpgcfg.project.json"), "utf8"));
 
+    if (local.extends && (await pathExists(local.extends))) {
+        const temp: Config["local"] = JSON.parse(await fs.readFile(path.resolve(local.extends), "utf8"));
+        local = {
+            ...temp,
+            ...local,
+        };
+    }
+
+    if (project.extends && (await pathExists(project.extends))) {
+        const temp: Config["project"] = JSON.parse(await fs.readFile(path.resolve(project.extends), "utf8"));
+        project = {
+            ...temp,
+            ...project,
+        };
+    }
     if (project.template && !("transpiler" in project)) {
         project.transpile = project.template === "typescript";
         const { template, ...newProject } = project;
