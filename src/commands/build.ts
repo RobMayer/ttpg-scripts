@@ -28,6 +28,9 @@ export const runBuild = async () => {
         Logger.log("rewriting assets/States GUIDs...");
         try {
             const dstDir = path.join(path.resolve(config.local.ttpg_path), `${config.project.slug}`, "States");
+            if (!(await pathExists(dstDir))) {
+                await fs.mkdir(dstDir, { recursive: true });
+            }
             const jsonFilenames = klawSync(dstDir, {
                 filter: (item) => {
                     return path.extname(item.path) === ".vts";
