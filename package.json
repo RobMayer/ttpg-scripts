@@ -2,6 +2,10 @@
     "name": "ttpg-scripts",
     "version": "1.6.0",
     "description": "",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RobMayer/ttpg-scripts.git"
+    },
     "bin": {
         "ttpg-scripts": "./bin/index.js"
     },
